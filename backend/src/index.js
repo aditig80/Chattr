@@ -37,30 +37,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 
-// Debug all registered routes and middleware
-function printRoutes(app) {
-  console.log("\n=== Registered Routes & Middleware ===");
-  app._router.stack.forEach((layer) => {
-    if (layer.route && layer.route.path) {
-      // Route handler
-      console.log(`Route: ${Object.keys(layer.route.methods).join(", ").toUpperCase()} ${layer.route.path}`);
-    } else if (layer.name === "router" && layer.handle.stack) {
-      // Router (like /api/auth)
-      layer.handle.stack.forEach((handler) => {
-        if (handler.route) {
-          console.log(
-            `Route: ${Object.keys(handler.route.methods).join(", ").toUpperCase()} ${layer.regexp}${handler.route.path}`
-          );
-        }
-      });
-    } else if (layer.name) {
-      console.log(`Middleware: ${layer.name}`);
-    }
-  });
-  console.log("=====================================\n");
-}
-
-printRoutes(app);
 
 
 server.listen(PORT, () => {
